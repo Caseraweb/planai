@@ -259,6 +259,23 @@ body{height:100%;font-family:'Outfit',sans-serif;background:var(--bg);color:var(
 .move-date{margin-top:10px}
 .move-date input{width:100%;padding:10px;background:var(--bg);border:1px solid var(--border);border-radius:var(--r-s);color:var(--text);font-family:'Outfit',sans-serif;font-size:14px;outline:none}
 </style>
+<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+<script>
+window.OneSignalDeferred = window.OneSignalDeferred || [];
+OneSignalDeferred.push(async function(OneSignal) {
+  await OneSignal.init({
+    appId: "c2818565-68e4-4c8e-800e-8faae2da6b4f",
+    notifyButton: {
+      enable: true
+    },
+    serviceWorkerPath: "/planai/OneSignalSDKWorker.js",
+    serviceWorkerUpdaterPath: "/planai/OneSignalSDKUpdaterWorker.js",
+    serviceWorkerParam: {
+      scope: "/planai/"
+    }
+  });
+});
+</script>
 </head>
 <body>
 
