@@ -281,6 +281,11 @@ body{height:100%;font-family:'Outfit',sans-serif;background:var(--bg);color:var(
 </div>
 
 <div class="qa">
+<div style="padding:0 16px 10px">
+  <button onclick="testOneSignalSubscribe()" style="width:100%;padding:12px;border:none;border-radius:12px;background:#7c6cf0;color:white;font-size:14px;font-weight:600;cursor:pointer">
+    Bildirimleri Bağla
+  </button>
+</div>
   <input class="qa-input" id="qaInput" placeholder="Görev yaz... (örn: yarın 14:00 diş hekimi)" autocomplete="off">
   <button class="qa-btn" onclick="quickAdd()">+</button>
 </div>
@@ -1519,6 +1524,31 @@ function init(){
   scheduleNotifs();
   setInterval(()=>{render();scheduleNotifs()},60000);
   initOneSignal();
+}
+async function testOneSignalSubscribe(){
+  window.OneSignalDeferred = window.OneSignalDeferred || [];
+  OneSignalDeferred.push(async function(OneSignal){
+    try{
+      const currentPermission = Notification.permission;
+      console.log('Mevcut izin:', currentPermission);
+
+      if (currentPermission !== 'granted') {
+        await OneSignal.Notifications.requestPermission();
+      }
+
+      const optedIn = OneSignal.User.PushSubscription.optedIn;
+      console.log('OneSignal optedIn:', optedIn);
+
+      if (optedIn) {
+        alert('OneSignal bağlandı. Artık test bildirimi gönderebilirsin.');
+      } else {
+        alert('Bağlanamadı. Üst sağdaki reklam/gizlilik eklentilerini kapat ve tekrar dene.');
+      }
+    } catch (e) {
+      console.error('OneSignal subscribe hata:', e);
+      alert('Hata oluştu. Console kontrol et.');
+    }
+  });
 }
 
 init();
