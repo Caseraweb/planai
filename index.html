@@ -9,6 +9,7 @@
 <link rel="apple-touch-icon" href="icon-192.png">
 <meta name="theme-color" content="#08080e">
 <link rel="manifest" href="manifest.json">
+
 <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
 <script>
 window.OneSignalDeferred = window.OneSignalDeferred || [];
@@ -21,17 +22,7 @@ OneSignalDeferred.push(async function(OneSignal) {
   });
 });
 </script>
-<script>
-window.OneSignalDeferred = window.OneSignalDeferred || [];
-OneSignalDeferred.push(async function(OneSignal) {
-  await OneSignal.init({
-    appId: "ONESIGNAL_APP_ID_BURAYA",
-    notifyButton: {
-      enable: true
-    }
-  });
-});
-</script>
+
 <title>PlanAI - Akıllı Günlük Planlayıcı</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
@@ -273,7 +264,6 @@ body{height:100%;font-family:'Outfit',sans-serif;background:var(--bg);color:var(
 
 <div class="nb" id="nb"><span class="nb-i" id="nbI">🔔</span><span class="nb-t" id="nbT"></span><button class="nb-x" onclick="hideNB()">✕</button></div>
 
-<!-- Header -->
 <div class="hdr">
   <div class="hdr-top">
     <div>
@@ -290,63 +280,51 @@ body{height:100%;font-family:'Outfit',sans-serif;background:var(--bg);color:var(
   </div>
 </div>
 
-<!-- Quick Add -->
 <div class="qa">
   <input class="qa-input" id="qaInput" placeholder="Görev yaz... (örn: yarın 14:00 diş hekimi)" autocomplete="off">
   <button class="qa-btn" onclick="quickAdd()">+</button>
 </div>
 <div class="qa-hint" id="qaHint"></div>
 
-<!-- Date Tabs -->
 <div style="display:flex;align-items:center;gap:6px;padding:0 16px 8px">
   <div class="dtabs" id="dTabs" style="padding:0;flex:1"></div>
   <button class="ib" onclick="openCalendar()" title="Takvim" style="flex-shrink:0">📅</button>
 </div>
 
-<!-- Calendar Modal -->
 <div class="mo" id="calMo">
   <div class="ms">
     <div class="mh"></div>
     <div class="mt" id="calTitle">📅 Takvim</div>
-    
-    <!-- Year selector -->
+
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
       <button class="ib" onclick="calNavYear(-1)">◀</button>
       <span id="calYearLabel" style="font-weight:700;font-size:18px;cursor:pointer;color:var(--accent-l)" onclick="toggleYearPicker()"></span>
       <button class="ib" onclick="calNavYear(1)">▶</button>
     </div>
-    
-    <!-- Year picker grid (hidden by default) -->
+
     <div id="calYearPicker" style="display:none;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:12px"></div>
-    
-    <!-- Month selector -->
-    <div id="calMonthBar" style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:12px;justify-content:center">
-    </div>
-    
-    <!-- Day grid -->
+
+    <div id="calMonthBar" style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:12px;justify-content:center"></div>
+
     <div id="calGrid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center"></div>
-    
-    <!-- Quick jump -->
+
     <div style="margin-top:12px;display:flex;gap:6px">
       <button class="btn btn-g" style="font-size:12px" onclick="calGoToday()">Bugün</button>
       <input type="date" id="calDateInput" class="fi" style="font-size:12px;padding:8px" onchange="calGoToDate(this.value)">
     </div>
-    
+
     <div class="btn-r"><button class="btn btn-p" onclick="closeMo('calMo')">Kapat</button></div>
   </div>
 </div>
 
-<!-- Stats Bar -->
 <div class="stats">
   <div class="stc"><div class="stv c1" id="sD">0</div><div class="stl">Tamam</div></div>
   <div class="stc"><div class="stv c2" id="sP">0</div><div class="stl">Bekliyor</div></div>
   <div class="stc"><div class="stv c3" id="sT">0</div><div class="stl">Toplam</div></div>
 </div>
 
-<!-- Main Content -->
 <div class="main" id="mainC"></div>
 
-<!-- TASK DETAIL/EDIT MODAL -->
 <div class="mo" id="detailMo">
   <div class="ms" id="detailSheet">
     <div class="mh"></div>
@@ -355,12 +333,11 @@ body{height:100%;font-family:'Outfit',sans-serif;background:var(--bg);color:var(
   </div>
 </div>
 
-<!-- SETTINGS MODAL -->
 <div class="mo" id="setMo">
   <div class="ms">
     <div class="mh"></div>
     <div class="mt">⚙ Ayarlar</div>
-    
+
     <div class="ss">
       <div class="ss-t">Bildirimler</div>
       <div class="sr">
@@ -372,7 +349,7 @@ body{height:100%;font-family:'Outfit',sans-serif;background:var(--bg);color:var(
         <div class="ts"><input type="number" id="sRem" value="40" min="5" max="120" onchange="uSet()"><span style="font-size:11px;color:var(--text-dim)">dk</span></div>
       </div>
     </div>
-    
+
     <div class="ss">
       <div class="ss-t">Akşam Planlama</div>
       <div class="sr">
@@ -384,7 +361,7 @@ body{height:100%;font-family:'Outfit',sans-serif;background:var(--bg);color:var(
         <div class="ts"><input type="time" id="sEveT" value="23:30" onchange="uSet()"></div>
       </div>
     </div>
-    
+
     <div class="ss">
       <div class="ss-t">Özet Bildirimleri</div>
       <div class="sr">
@@ -400,7 +377,7 @@ body{height:100%;font-family:'Outfit',sans-serif;background:var(--bg);color:var(
         <div class="ts"><input type="time" id="sSumT" value="08:00" onchange="uSet()"></div>
       </div>
     </div>
-    
+
     <div class="ss">
       <div class="ss-t">Görünüm</div>
       <div class="sr">
@@ -408,7 +385,7 @@ body{height:100%;font-family:'Outfit',sans-serif;background:var(--bg);color:var(
         <div class="tog" id="tTheme" onclick="toggleTheme()"></div>
       </div>
     </div>
-    
+
     <div class="ss">
       <div class="ss-t">Veri</div>
       <div class="sr">
@@ -416,30 +393,28 @@ body{height:100%;font-family:'Outfit',sans-serif;background:var(--bg);color:var(
         <button class="btn btn-d" style="width:auto;padding:7px 14px;font-size:12px" onclick="clearAll()">Sil</button>
       </div>
     </div>
-    
+
     <button class="btn btn-p" onclick="closeMo('setMo')">Kapat</button>
   </div>
 </div>
 
-<!-- STATS MODAL -->
 <div class="mo" id="statMo">
   <div class="ms">
     <div class="mh"></div>
     <div class="mt">📊 İstatistikler</div>
-    
+
     <div class="tabbar" id="statTabs">
       <div class="tabitem a" onclick="showStatTab('overview')">Genel</div>
       <div class="tabitem" onclick="showStatTab('week')">Bu Hafta</div>
       <div class="tabitem" onclick="showStatTab('month')">Bu Ay</div>
     </div>
-    
+
     <div id="statContent"></div>
     <button class="btn btn-p" style="margin-top:14px" onclick="closeMo('statMo')">Kapat</button>
   </div>
 </div>
 
 <script>
-// ============ STATE ============
 let sel = new Date();
 let tasks = {};
 let templates = [];
@@ -475,7 +450,6 @@ const PRIS=[
 
 let timers={};
 
-// ============ STORAGE ============
 function save(){
   try{
     const d=JSON.stringify({tasks,templates,S});
@@ -500,7 +474,6 @@ function applyData(d){
   if(d.S) S={...S,...d.S};
 }
 
-// ============ HELPERS ============
 function dk(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
 function isT(d){const n=new Date();return d.getDate()===n.getDate()&&d.getMonth()===n.getMonth()&&d.getFullYear()===n.getFullYear()}
 function pd(s){const[y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d)}
@@ -520,18 +493,16 @@ function tp(time){
 function getCat(id){return CATS.find(c=>c.id===id)||CATS[5]}
 function getPri(id){return PRIS.find(p=>p.id===id)||PRIS[0]}
 
-// ============ NLP PARSER ============
 function parseNL(text){
   let result={title:text.trim(),time:null,date:null,repeat:'none',days:null,category:null,priority:null,subtasks:[]};
   let t=text.trim();
-  
-  // Extract time patterns
+
   const timePatterns=[
     /\b(\d{1,2})[:\.](\d{2})\b/,
     /\bsaat\s*(\d{1,2})[:\.]?(\d{2})?\b/i,
     /\b(\d{1,2})\s*['']?\s*(?:da|de|te|ta)\b/i,
   ];
-  
+
   for(const p of timePatterns){
     const m=t.match(p);
     if(m){
@@ -543,26 +514,20 @@ function parseNL(text){
       }
     }
   }
-  
-  // Extract date patterns
+
   const today=new Date();
-  
-  // "yarın"
+
   if(/\byar[ıi]n\b/i.test(t)){
     result.date=dk(addD(today,1));
     t=t.replace(/\byar[ıi]n\b/i,'').trim();
-  }
-  // "bugün"
-  else if(/\bbug[üu]n\b/i.test(t)){
+  } else if(/\bbug[üu]n\b/i.test(t)){
     result.date=dk(today);
     t=t.replace(/\bbug[üu]n\b/i,'').trim();
-  }
-  // "öbür gün" / "ertesi gün"
-  else if(/\b[öo]b[üu]r\s*g[üu]n\b/i.test(t)||/\bertesi\s*g[üu]n\b/i.test(t)){
+  } else if(/\b[öo]b[üu]r\s*g[üu]n\b/i.test(t)||/\bertesi\s*g[üu]n\b/i.test(t)){
     result.date=dk(addD(today,2));
     t=t.replace(/\b[öo]b[üu]r\s*g[üu]n\b/i,'').replace(/\bertesi\s*g[üu]n\b/i,'').trim();
   }
-  // "pazartesi", "salı" etc.
+
   const dayNames=['pazar','pazartesi','sal[ıi]','[çc]ar[şs]amba','per[şs]embe','cuma','cumartesi'];
   dayNames.forEach((dn,idx)=>{
     const re=new RegExp('\\b'+dn+'\\b','i');
@@ -573,7 +538,7 @@ function parseNL(text){
       t=t.replace(re,'').trim();
     }
   });
-  // "15 nisan", "3 mart" etc.
+
   const monthNames=['ocak','[şs]ubat','mart','nisan','may[ıi]s','haziran','temmuz','a[ğg]ustos','eyl[üu]l','ekim','kas[ıi]m','aral[ıi]k'];
   monthNames.forEach((mn,idx)=>{
     const re=new RegExp('(\\d{1,2})\\s*'+mn,'i');
@@ -587,7 +552,7 @@ function parseNL(text){
       t=t.replace(m[0],'').trim();
     }
   });
-  // dd/mm or dd.mm or dd-mm
+
   const dateP=/\b(\d{1,2})[\/\.\-](\d{1,2})(?:[\/\.\-](\d{2,4}))?\b/;
   const dm=t.match(dateP);
   if(dm&&!result.date){
@@ -599,12 +564,10 @@ function parseNL(text){
       t=t.replace(dm[0],'').trim();
     }
   }
-  
-  // Extract repeat patterns
+
   if(/\bher\s*g[üu]n\b/i.test(t)){
     result.repeat='forever';
     t=t.replace(/\bher\s*g[üu]n\b/i,'').trim();
-    // Check for "X gün" after
     const gm=t.match(/(\d+)\s*g[üu]n/i);
     if(gm){
       result.repeat='custom';
@@ -618,27 +581,21 @@ function parseNL(text){
     result.days=parseInt(gm[1]);
     t=t.replace(gm[0],'').trim();
   }
-  
-  // Extract priority - expanded Turkish keywords
+
   if(/\bacil\b|\burkent\b|\b[çc]ok\s*[öo]nemli\b|\ben\s*[öo]nemli\b|\bkritik\b|\bivedi\b/i.test(t)){
     result.priority='urgent';
     t=t.replace(/\bacil\b|\burkent\b|\b[çc]ok\s*[öo]nemli\b|\ben\s*[öo]nemli\b|\bkritik\b|\bivedi\b/i,'').trim();
-  }
-  else if(/\by[üu]ksek\b|\b[öo]nemli\b|\by[üu]ksek\s*[öo]ncelik\b/i.test(t)){
+  } else if(/\by[üu]ksek\b|\b[öo]nemli\b|\by[üu]ksek\s*[öo]ncelik\b/i.test(t)){
     result.priority='high';
     t=t.replace(/\by[üu]ksek\b|\b[öo]nemli\b|\by[üu]ksek\s*[öo]ncelik\b/i,'').trim();
-  }
-  else if(/\borta\b|\bnormal\b|\borta\s*[öo]ncelik\b/i.test(t)){
+  } else if(/\borta\b|\bnormal\b|\borta\s*[öo]ncelik\b/i.test(t)){
     result.priority='mid';
     t=t.replace(/\borta\b|\bnormal\b|\borta\s*[öo]ncelik\b/i,'').trim();
-  }
-  else if(/\bd[üu][şs][üu]k\b|\baz\s*[öo]nemli\b|\bd[üu][şs][üu]k\s*[öo]ncelik\b/i.test(t)){
+  } else if(/\bd[üu][şs][üu]k\b|\baz\s*[öo]nemli\b|\bd[üu][şs][üu]k\s*[öo]ncelik\b/i.test(t)){
     result.priority='low';
     t=t.replace(/\bd[üu][şs][üu]k\b|\baz\s*[öo]nemli\b|\bd[üu][şs][üu]k\s*[öo]ncelik\b/i,'').trim();
   }
-  
-  // Extract category - direct keywords + contextual hints
-  // Turkish chars don't work well with \b, use lookaround alternative
+
   const catTests=[
     {id:'is', re:/(?:^|\s)i[şs](?:\s|$)/i},
     {id:'kisisel', re:/(?:^|\s)ki[şs]isel(?:\s|$)/i},
@@ -653,8 +610,7 @@ function parseNL(text){
       break;
     }
   }
-  
-  // If no direct category match, try contextual hints
+
   if(!result.category){
     const catHints={
       'is':/\btoplant[ıi]\b|\bpazarlama\b|\bsosyal\s*medya\b|\bkampanya\b|\breklam\b|\binstagram\b|\btiktok\b/i,
@@ -667,8 +623,7 @@ function parseNL(text){
       if(re.test(t)){result.category=cat;break;}
     }
   }
-  
-  // Extract subtasks with "-" or ":" list
+
   const subMatch=t.match(/[:;]\s*(.+)/);
   if(subMatch){
     const subs=subMatch[1].split(/[,;]/).map(s=>s.trim()).filter(s=>s.length>0);
@@ -677,26 +632,23 @@ function parseNL(text){
       t=t.replace(subMatch[0],'').trim();
     }
   }
-  
-  // Clean title
+
   t=t.replace(/\s+/g,' ').replace(/^[\s,\-:]+/,'').replace(/[\s,\-:]+$/,'').trim();
   if(t) result.title=t;
-  
-  // Default time if not specified
+
   if(!result.time) result.time='09:00';
   if(!result.date) result.date=dk(sel);
-  
+
   return result;
 }
 
-// ============ QUICK ADD ============
 let qaTimeout;
 document.getElementById('qaInput').addEventListener('input',function(){
   clearTimeout(qaTimeout);
   const v=this.value.trim();
   const hint=document.getElementById('qaHint');
   if(!v){hint.classList.remove('show');return;}
-  
+
   qaTimeout=setTimeout(()=>{
     const p=parseNL(v);
     let parts=[];
@@ -709,7 +661,7 @@ document.getElementById('qaInput').addEventListener('input',function(){
     if(p.priority) parts.push('⚡ '+getPri(p.priority).name);
     if(p.category) parts.push('🏷 '+getCat(p.category).name);
     if(p.subtasks.length) parts.push('☑ '+p.subtasks.length+' alt görev');
-    
+
     hint.innerHTML=parts.join(' · ');
     hint.classList.add('show');
   },300);
@@ -723,11 +675,10 @@ function quickAdd(){
   const input=document.getElementById('qaInput');
   const v=input.value.trim();
   if(!v) return;
-  
+
   const p=parseNL(v);
-  
+
   if(p.repeat!=='none'){
-    // Recurring
     const tmpl={
       id:'t-'+uid(),title:p.title,time:p.time,
       repeat:p.repeat,days:p.days,
@@ -747,7 +698,7 @@ function quickAdd(){
       subtasks:p.subtasks,postponeCount:0,
       created:new Date().toISOString()
     });
-    
+
     if(key!==dk(sel)){
       const d=pd(key);
       showNB(`📌 "${p.title}" → ${d.getDate()} ${MT[d.getMonth()]}`,'📌');
@@ -755,23 +706,22 @@ function quickAdd(){
       showNB(`📌 "${p.title}" eklendi`,'📌');
     }
   }
-  
+
   input.value='';
   document.getElementById('qaHint').classList.remove('show');
   save();render();scheduleNotifs();
 }
 
-// ============ TEMPLATES ============
 function expandTemplates(){
   const today=new Date();
   const hz=addD(today,60);
-  
+
   templates.forEach(tmpl=>{
     const start=pd(tmpl.startDate);
     let end;
     if(tmpl.repeat==='forever') end=hz;
     else{end=addD(start,(tmpl.days||365)-1);if(end>hz)end=hz;}
-    
+
     let cur=new Date(start);
     while(cur<=end){
       const key=dk(cur);
@@ -792,7 +742,6 @@ function expandTemplates(){
   save();
 }
 
-// ============ RENDER ============
 function rTabs(){
   const c=document.getElementById('dTabs');c.innerHTML='';
   const today=new Date();
@@ -807,13 +756,12 @@ function rTabs(){
     else if(i===1) dn='YARIN';
     else if(i===-1) dn='DÜN';
     else dn=DS[d.getDay()].toUpperCase();
-    
+
     tab.innerHTML=`<span class="dn">${dn}</span><span class="dd">${d.getDate()}</span>`;
     tab.onclick=()=>{sel=new Date(d);render()};
     if(dk(d)===dk(sel)) tab.id='activeTab';
     c.appendChild(tab);
   }
-  // Scroll active tab into view
   const active=document.getElementById('activeTab');
   if(active) active.scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'});
 }
@@ -831,31 +779,90 @@ function rStats(){
   document.getElementById('sT').textContent=dt.length;
 }
 
+function renderSubtasks(task,key){
+  if(!task.subtasks||task.subtasks.length===0) return '';
+  const done=task.subtasks.filter(s=>s.done).length;
+  return `<div class="tc-subs">
+    ${task.subtasks.map(s=>`
+      <div class="tc-sub ${s.done?'sdone':''}" onclick="event.stopPropagation()">
+        <div class="tc-sub-chk" onclick="togSub('${key}','${task.id}','${s.id}')">${s.done?'✓':''}</div>
+        <span class="tc-sub-text">${esc(s.text)}</span>
+      </div>
+    `).join('')}
+    <div style="font-size:9px;color:var(--text-dimmer);margin-top:2px">${done}/${task.subtasks.length} tamamlandı</div>
+  </div>`;
+}
+
+function renderSearch(){
+  let html=`<div class="search-bar">
+    <input class="search-input" id="searchInput" placeholder="Görev ara..." value="${esc(searchQ)}" oninput="searchQ=this.value;rMain()">
+    <button class="ib" onclick="toggleSearch()" style="font-size:12px">✕</button>
+  </div>`;
+
+  if(!searchQ.trim()){
+    html+=`<div class="empty"><div class="empty-i">🔍</div><div class="empty-t">Görev Ara</div><div class="empty-d">Tüm görevler arasında arama yap</div></div>`;
+    return html;
+  }
+
+  const q=searchQ.toLowerCase();
+  const results=[];
+  Object.keys(tasks).forEach(key=>{
+    (tasks[key]||[]).forEach(t=>{
+      if(t.title.toLowerCase().includes(q)){
+        results.push({...t,dateKey:key});
+      }
+    });
+  });
+
+  results.sort((a,b)=>b.dateKey.localeCompare(a.dateKey));
+
+  if(results.length===0){
+    html+=`<div class="empty"><div class="empty-i">🤷</div><div class="empty-t">Sonuç bulunamadı</div></div>`;
+    return html;
+  }
+
+  html+=`<div style="font-size:12px;color:var(--text-dim);margin-bottom:8px">${results.length} sonuç</div>`;
+
+  results.slice(0,30).forEach(r=>{
+    const cat=getCat(r.category);
+    const pri=getPri(r.priority);
+    html+=`<div class="tc ${r.done?'done':''}" onclick="sel=pd('${r.dateKey}');searchMode=false;render()">
+      <div class="tc-chk">${r.done?'✓':''}</div>
+      <div class="tc-body">
+        <div class="tc-row1">
+          <span class="tc-time">${r.dateKey.substring(5)} · ${r.time}</span>
+          <span class="tc-pri ${pri.cls}">${pri.name}</span>
+          <span class="tc-cat" style="background:${cat.color};color:${cat.text}">${cat.name}</span>
+        </div>
+        <div class="tc-title">${esc(r.title)}</div>
+      </div>
+    </div>`;
+  });
+
+  return html;
+}
+
 function rMain(){
   const c=document.getElementById('mainC');
   const key=dk(sel);
   let dayTasks=(tasks[key]||[]).sort((a,b)=>a.time.localeCompare(b.time));
-  
   let html='';
-  
-  // Search mode
+
   if(searchMode){
     html+=renderSearch();
     c.innerHTML=html;
     return;
   }
-  
+
   if(dayTasks.length===0){
     html+=`<div class="empty"><div class="empty-i">📋</div><div class="empty-t">Görev yok</div><div class="empty-d">Yukarıdaki kutucuğa yazarak görev ekle</div></div>`;
     c.innerHTML=html;return;
   }
-  
-  // Filter by category
+
   if(filterCat!=='all'){
     dayTasks=dayTasks.filter(t=>t.category===filterCat);
   }
-  
-  // Category filter chips
+
   const allCats=[...new Set((tasks[key]||[]).map(t=>t.category).filter(Boolean))];
   if(allCats.length>1){
     html+=`<div class="filter-chips">
@@ -866,28 +873,24 @@ function rMain(){
       }).join('')}
     </div>`;
   }
-  
-  // Group by time
+
   const groups={};
   dayTasks.forEach(task=>{
     const p=tp(task.time);
     if(!groups[p.o]) groups[p.o]={...p,tasks:[]};
     groups[p.o].tasks.push(task);
   });
-  
+
   const now=new Date();
   const curT=String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
-  
-  // Sort priorities: urgent first, then high, mid, low
   const priOrder={urgent:0,high:1,mid:2,low:3};
-  
+
   Object.keys(groups).sort((a,b)=>a-b).forEach(o=>{
     const g=groups[o];
     const dc=g.tasks.filter(t=>t.done).length;
     const ad=dc===g.tasks.length;
     const pr=(dc/g.tasks.length)*100;
-    
-    // Sort: undone first (by priority then time), done at bottom
+
     g.tasks.sort((a,b)=>{
       if(a.done!==b.done) return a.done?1:-1;
       const pa=priOrder[a.priority||'mid']||2;
@@ -895,14 +898,14 @@ function rMain(){
       if(pa!==pb) return pa-pb;
       return a.time.localeCompare(b.time);
     });
-    
+
     html+=`<div class="tg"><div class="tg-h">
       <span class="tg-i">${g.i}</span>
       <span class="tg-n ${ad?'done':''}">${g.n}</span>
       <span class="tg-c">${dc}/${g.tasks.length}</span>
       <div class="tg-p"><div class="tg-pf" style="width:${pr}%;background:${ad?'var(--success)':'var(--accent)'}"></div></div>
     </div>`;
-    
+
     g.tasks.forEach(task=>{
       const up=isT(sel)&&!task.done&&task.time>=curT;
       let cdHtml='';
@@ -911,10 +914,10 @@ function rMain(){
         const diff=th*60+tm-(now.getHours()*60+now.getMinutes());
         if(diff>0&&diff<=120) cdHtml=`<span class="tc-cd">${diff<60?diff+' dk':Math.floor(diff/60)+'sa '+diff%60+'dk'}</span>`;
       }
-      
+
       const cat=getCat(task.category);
       const pri=getPri(task.priority);
-      
+
       html+=`<div class="tc ${task.done?'done':''} ${up?'upcoming':''}">
         <div class="tc-chk" onclick="togTask('${key}','${task.id}')">${task.done?'✓':''}</div>
         <div class="tc-body" onclick="openDetail('${key}','${task.id}')">
@@ -932,28 +935,20 @@ function rMain(){
         ${up?'<div class="tc-ind"></div>':''}
       </div>`;
     });
-    
+
     html+=`</div>`;
   });
-  
+
   c.innerHTML=html;
 }
 
-function renderSubtasks(task,key){
-  if(!task.subtasks||task.subtasks.length===0) return '';
-  const done=task.subtasks.filter(s=>s.done).length;
-  return `<div class="tc-subs">
-    ${task.subtasks.map(s=>`
-      <div class="tc-sub ${s.done?'sdone':''}" onclick="event.stopPropagation()">
-        <div class="tc-sub-chk" onclick="togSub('${key}','${task.id}','${s.id}')">${s.done?'✓':''}</div>
-        <span class="tc-sub-text">${esc(s.text)}</span>
-      </div>
-    `).join('')}
-    <div style="font-size:9px;color:var(--text-dimmer);margin-top:2px">${done}/${task.subtasks.length} tamamlandı</div>
-  </div>`;
+function render(){
+  rTabs();
+  rHeader();
+  rStats();
+  rMain();
+  rSettings();
 }
-
-function render(){rTabs();rHeader();rStats();rMain();rSettings();}
 
 function rSettings(){
   document.getElementById('tNotif').className='tog'+(S.notif?' a':'');
@@ -964,11 +959,9 @@ function rSettings(){
   document.getElementById('sRem').value=S.rem;
   document.getElementById('sEveT').value=S.eveTime;
   document.getElementById('sSumT').value=S.sumTime;
-  // Update theme button icon
   document.getElementById('themeBtn').textContent=S.theme==='light'?'☀️':'🌙';
 }
 
-// ============ THEME ============
 function toggleTheme(){
   S.theme=S.theme==='light'?'dark':'light';
   applyTheme();
@@ -986,7 +979,6 @@ function applyTheme(){
   }
 }
 
-// ============ SEARCH ============
 function toggleSearch(){
   searchMode=!searchMode;
   searchQ='';
@@ -1000,59 +992,8 @@ function toggleSearch(){
   }
 }
 
-function renderSearch(){
-  let html=`<div class="search-bar">
-    <input class="search-input" id="searchInput" placeholder="Görev ara..." value="${esc(searchQ)}" oninput="searchQ=this.value;rMain()">
-    <button class="ib" onclick="toggleSearch()" style="font-size:12px">✕</button>
-  </div>`;
-  
-  if(!searchQ.trim()){
-    html+=`<div class="empty"><div class="empty-i">🔍</div><div class="empty-t">Görev Ara</div><div class="empty-d">Tüm görevler arasında arama yap</div></div>`;
-    return html;
-  }
-  
-  const q=searchQ.toLowerCase();
-  const results=[];
-  Object.keys(tasks).forEach(key=>{
-    (tasks[key]||[]).forEach(t=>{
-      if(t.title.toLowerCase().includes(q)){
-        results.push({...t,dateKey:key});
-      }
-    });
-  });
-  
-  results.sort((a,b)=>b.dateKey.localeCompare(a.dateKey));
-  
-  if(results.length===0){
-    html+=`<div class="empty"><div class="empty-i">🤷</div><div class="empty-t">Sonuç bulunamadı</div></div>`;
-    return html;
-  }
-  
-  html+=`<div style="font-size:12px;color:var(--text-dim);margin-bottom:8px">${results.length} sonuç</div>`;
-  
-  results.slice(0,30).forEach(r=>{
-    const d=pd(r.dateKey);
-    const cat=getCat(r.category);
-    const pri=getPri(r.priority);
-    html+=`<div class="tc ${r.done?'done':''}" onclick="sel=pd('${r.dateKey}');searchMode=false;render()">
-      <div class="tc-chk">${r.done?'✓':''}</div>
-      <div class="tc-body">
-        <div class="tc-row1">
-          <span class="tc-time">${r.dateKey.substring(5)} · ${r.time}</span>
-          <span class="tc-pri ${pri.cls}">${pri.name}</span>
-          <span class="tc-cat" style="background:${cat.color};color:${cat.text}">${cat.name}</span>
-        </div>
-        <div class="tc-title">${esc(r.title)}</div>
-      </div>
-    </div>`;
-  });
-  
-  return html;
-}
-
 function setFilter(cat){filterCat=cat;rMain();}
 
-// ============ TASK ACTIONS ============
 function findTask(key,tid){
   if(!tasks[key]) return null;
   return tasks[key].find(t=>t.id===tid);
@@ -1086,18 +1027,17 @@ function deleteTask(key,tid){
 function postponeTask(key,tid,days){
   const t=findTask(key,tid);
   if(!t) return;
-  
+
   const newDate=dk(addD(pd(key),days));
   if(!tasks[newDate]) tasks[newDate]=[];
-  
+
   const newTask={...t,id:uid(),postponeCount:(t.postponeCount||0)+1};
   if(newTask.subtasks) newTask.subtasks=newTask.subtasks.map(s=>({...s,id:uid()}));
   tasks[newDate].push(newTask);
-  
-  // Remove from current day
+
   tasks[key]=tasks[key].filter(x=>x.id!==tid);
   if(tasks[key].length===0) delete tasks[key];
-  
+
   save();render();closeMo('detailMo');
   const d=pd(newDate);
   showNB(`⏩ ${days===1?'Yarına':d.getDate()+' '+MT[d.getMonth()]+'\'a'} ertelendi`,'⏩');
@@ -1106,37 +1046,36 @@ function postponeTask(key,tid,days){
 function moveTask(key,tid){
   const dateInput=document.getElementById('moveDateInput');
   if(!dateInput||!dateInput.value) return;
-  
+
   const t=findTask(key,tid);
   if(!t) return;
-  
+
   const newDate=dateInput.value;
   if(!tasks[newDate]) tasks[newDate]=[];
-  
+
   const newTask={...t,id:uid()};
   if(newTask.subtasks) newTask.subtasks=newTask.subtasks.map(s=>({...s,id:uid()}));
   tasks[newDate].push(newTask);
-  
+
   tasks[key]=tasks[key].filter(x=>x.id!==tid);
   if(tasks[key].length===0) delete tasks[key];
-  
+
   save();render();closeMo('detailMo');
   const d=pd(newDate);
   showNB(`📦 ${d.getDate()} ${MT[d.getMonth()]}\'a taşındı`,'📦');
 }
 
-// ============ DETAIL/EDIT MODAL ============
 let editKey='',editTid='';
 
 function openDetail(key,tid){
   const t=findTask(key,tid);
   if(!t) return;
   editKey=key;editTid=tid;
-  
+
   const cat=getCat(t.category);
   const pri=getPri(t.priority);
   const d=pd(key);
-  
+
   let html=`
     <div style="margin-bottom:14px">
       <div style="font-size:16px;font-weight:600;margin-bottom:6px">${esc(t.title)}</div>
@@ -1149,8 +1088,7 @@ function openDetail(key,tid){
         ${t.postponeCount>0?`<span class="tc-postponed" style="font-size:10px">${t.postponeCount}× ertelendi</span>`:''}
       </div>
     </div>
-    
-    <!-- Edit Section -->
+
     <div class="fg">
       <label class="fl">Düzenle</label>
       <input class="fi" id="editTitle" value="${esc(t.title)}">
@@ -1170,10 +1108,9 @@ function openDetail(key,tid){
         ${CATS.map(c=>`<option value="${c.id}" ${t.category===c.id?'selected':''}>${c.name}</option>`).join('')}
       </select>
     </div>
-    
+
     <button class="btn btn-p" onclick="saveEdit()" style="margin-bottom:10px">💾 Kaydet</button>
-    
-    <!-- Subtasks -->
+
     <div class="fg">
       <label class="fl">Alt Görevler</label>
       <div id="editSubs">
@@ -1188,8 +1125,7 @@ function openDetail(key,tid){
         <button class="btn btn-g" style="width:auto;padding:8px 14px;font-size:12px" onclick="addSubtask()">+</button>
       </div>
     </div>
-    
-    <!-- Postpone -->
+
     <div class="fg">
       <label class="fl">Ertele</label>
       <div class="postpone-opts">
@@ -1199,8 +1135,7 @@ function openDetail(key,tid){
         <div class="po-btn" onclick="postponeTask('${key}','${tid}',7)">1 hafta</div>
       </div>
     </div>
-    
-    <!-- Move -->
+
     <div class="fg">
       <label class="fl">Başka Güne Taşı</label>
       <div class="move-date">
@@ -1208,13 +1143,13 @@ function openDetail(key,tid){
         <button class="btn btn-g" style="margin-top:6px" onclick="moveTask('${key}','${tid}')">📦 Taşı</button>
       </div>
     </div>
-    
+
     <div class="btn-r">
       <button class="btn btn-d" onclick="deleteTask('${key}','${tid}');closeMo('detailMo')">🗑 Sil</button>
       <button class="btn btn-g" onclick="closeMo('detailMo')">Kapat</button>
     </div>
   `;
-  
+
   document.getElementById('detailContent').innerHTML=html;
   document.getElementById('detailMo').classList.add('a');
 }
@@ -1222,13 +1157,13 @@ function openDetail(key,tid){
 function saveEdit(){
   const t=findTask(editKey,editTid);
   if(!t) return;
-  
+
   const newTitle=document.getElementById('editTitle').value.trim();
   if(newTitle) t.title=newTitle;
   t.time=document.getElementById('editTime').value;
   t.priority=document.getElementById('editPri').value;
   t.category=document.getElementById('editCat').value;
-  
+
   save();render();closeMo('detailMo');
   showNB('✏️ Güncellendi','✏️');
 }
@@ -1239,16 +1174,15 @@ function addSubtask(){
   const input=document.getElementById('newSubInput');
   const text=input.value.trim();
   if(!text) return;
-  
+
   if(!t.subtasks) t.subtasks=[];
   t.subtasks.push({id:uid(),text,done:false});
   input.value='';
-  
+
   save();
-  openDetail(editKey,editTid); // Refresh
+  openDetail(editKey,editTid);
 }
 
-// ============ STATS ============
 function openStats(){
   showStatTab('overview');
   document.getElementById('statMo').classList.add('a');
@@ -1258,9 +1192,9 @@ function showStatTab(tab){
   document.querySelectorAll('#statTabs .tabitem').forEach((t,i)=>{
     t.classList.toggle('a',['overview','week','month'][i]===tab);
   });
-  
+
   const c=document.getElementById('statContent');
-  
+
   if(tab==='overview'){
     let total=0,done=0,postponed=0,cats={};
     Object.values(tasks).forEach(day=>{
@@ -1272,7 +1206,7 @@ function showStatTab(tab){
         cats[cn]=(cats[cn]||0)+1;
       });
     });
-    
+
     c.innerHTML=`
       <div class="stat-grid">
         <div class="stat-box"><div class="stat-big" style="color:var(--accent)">${total}</div><div class="stat-label">Toplam Görev</div></div>
@@ -1297,13 +1231,13 @@ function showStatTab(tab){
       c.innerHTML=`<div style="text-align:center;padding:24px;color:var(--text-dim)">Bu ${tab==='week'?'hafta':'ay'} için görev yok</div>`;
       return;
     }
-    
+
     const byDate={};
     items.forEach(t=>{
       if(!byDate[t.date]) byDate[t.date]={label:t.dateLabel,day:t.dayLabel,tasks:[]};
       byDate[t.date].tasks.push(t);
     });
-    
+
     let html=`<div style="font-size:12px;color:var(--text-dim);margin-bottom:8px">${items.length} bekleyen görev</div>`;
     Object.keys(byDate).sort().forEach(date=>{
       const g=byDate[date];
@@ -1347,9 +1281,7 @@ function getMonthTasks(){
   return r.sort((a,b)=>a.date.localeCompare(b.date)||a.time.localeCompare(b.time));
 }
 
-// ============ SETTINGS ============
 function openSettings(){rSettings();document.getElementById('setMo').classList.add('a')}
-function closeSettings(){document.getElementById('setMo').classList.remove('a')}
 
 async function tSet(key){
   const map={notif:'notif',eve:'eve',week:'week',month:'month'};
@@ -1374,15 +1306,13 @@ function clearAll(){
   }
 }
 
-// ============ NOTIFICATIONS ============
 function scheduleNotifs(){
   Object.values(timers).forEach(clearTimeout);timers={};
   if(!S.notif) return;
-  
+
   const now=new Date();
   const today=dk(now);
-  
-  // Task reminders
+
   (tasks[today]||[]).forEach(t=>{
     if(t.done) return;
     const[h,m]=t.time.split(':').map(Number);
@@ -1395,16 +1325,14 @@ function scheduleNotifs(){
       },diff);
     }
   });
-  
-  // Evening
+
   if(S.eve){
     const[eh,em]=S.eveTime.split(':').map(Number);
     const ed=new Date();ed.setHours(eh,em,0,0);
     const diff=ed.getTime()-now.getTime();
     if(diff>0) timers.eve=setTimeout(()=>sendNotif('📋 Yarını Planla','Yarınki görevlerini girmek için uygulamayı aç!'),diff);
   }
-  
-  // Weekly/Monthly
+
   if(S.week&&now.getDay()===1){
     const[sh,sm]=S.sumTime.split(':').map(Number);
     const sd=new Date();sd.setHours(sh,sm,0,0);
@@ -1424,19 +1352,15 @@ function sendNotif(title,body){
   showNB(body,'🔔');
 }
 
-// ============ UI HELPERS ============
 let nbTO;
 function showNB(t,i){clearTimeout(nbTO);document.getElementById('nbT').textContent=t;document.getElementById('nbI').textContent=i||'🔔';document.getElementById('nb').classList.add('show');nbTO=setTimeout(()=>document.getElementById('nb').classList.remove('show'),3500)}
 function hideNB(){document.getElementById('nb').classList.remove('show')}
-
 function closeMo(id){document.getElementById(id).classList.remove('a')}
 
-// Close modals on overlay
 ['detailMo','setMo','statMo','calMo'].forEach(id=>{
   document.getElementById(id).addEventListener('click',function(e){if(e.target===this)this.classList.remove('a')});
 });
 
-// ============ CALENDAR ============
 let calMonth=new Date().getMonth();
 let calYear=new Date().getFullYear();
 let yearPickerOpen=false;
@@ -1449,26 +1373,10 @@ function openCalendar(){
   document.getElementById('calMo').classList.add('a');
 }
 
-function calNavYear(dir){
-  calYear+=dir;
-  renderCalendar();
-}
-
-function toggleYearPicker(){
-  yearPickerOpen=!yearPickerOpen;
-  renderCalendar();
-}
-
-function selectYear(y){
-  calYear=y;
-  yearPickerOpen=false;
-  renderCalendar();
-}
-
-function selectMonth(m){
-  calMonth=m;
-  renderCalendar();
-}
+function calNavYear(dir){calYear+=dir;renderCalendar()}
+function toggleYearPicker(){yearPickerOpen=!yearPickerOpen;renderCalendar()}
+function selectYear(y){calYear=y;yearPickerOpen=false;renderCalendar()}
+function selectMonth(m){calMonth=m;renderCalendar()}
 
 function calGoToday(){
   const today=new Date();
@@ -1490,10 +1398,8 @@ function calGoToDate(val){
 }
 
 function renderCalendar(){
-  // Year label
   document.getElementById('calYearLabel').textContent=calYear;
-  
-  // Year picker
+
   const yp=document.getElementById('calYearPicker');
   if(yearPickerOpen){
     yp.style.display='grid';
@@ -1518,8 +1424,7 @@ function renderCalendar(){
   } else {
     yp.style.display='none';
   }
-  
-  // Month bar
+
   const mb=document.getElementById('calMonthBar');
   const shortMonths=['Oca','Şub','Mar','Nis','May','Haz','Tem','Ağu','Eyl','Eki','Kas','Ara'];
   let mhtml='';
@@ -1538,29 +1443,24 @@ function renderCalendar(){
     ">${m}</div>`;
   });
   mb.innerHTML=mhtml;
-  
-  // Day grid
+
   const grid=document.getElementById('calGrid');
   let html='';
-  
   const dayHeaders=['Pzt','Sal','Çar','Per','Cum','Cmt','Paz'];
   dayHeaders.forEach(d=>{
     html+=`<div style="font-size:10px;color:var(--text-dimmer);padding:4px;font-weight:600">${d}</div>`;
   });
-  
+
   const firstDay=new Date(calYear,calMonth,1);
   let startDay=firstDay.getDay()-1;
   if(startDay<0) startDay=6;
-  
   const daysInMonth=new Date(calYear,calMonth+1,0).getDate();
   const today=new Date();
   const todayKey=dk(today);
   const selKey=dk(sel);
-  
-  for(let i=0;i<startDay;i++){
-    html+=`<div></div>`;
-  }
-  
+
+  for(let i=0;i<startDay;i++){html+=`<div></div>`;}
+
   for(let d=1;d<=daysInMonth;d++){
     const date=new Date(calYear,calMonth,d);
     const key=dk(date);
@@ -1569,14 +1469,14 @@ function renderCalendar(){
     const hasTasks=tasks[key]&&tasks[key].length>0;
     const taskCount=hasTasks?(tasks[key]||[]).length:0;
     const doneCount=hasTasks?(tasks[key]||[]).filter(t=>t.done).length:0;
-    
+
     let bg='transparent';
     let border='1px solid transparent';
     let color='var(--text)';
-    
+
     if(isSel){bg='var(--accent)';color='#fff';border='1px solid var(--accent)';}
     else if(isToday){border='1px solid var(--accent)';color='var(--accent-l)';}
-    
+
     html+=`<div onclick="selectCalDate('${key}')" style="
       padding:6px 2px;
       border-radius:10px;
@@ -1595,10 +1495,8 @@ function renderCalendar(){
       ${hasTasks?`<span style="font-size:8px;color:${isSel?'rgba(255,255,255,.8)':doneCount===taskCount?'var(--success)':'var(--warn)'};margin-top:1px">${doneCount}/${taskCount}</span>`:''}
     </div>`;
   }
-  
+
   grid.innerHTML=html;
-  
-  // Set date input value
   const di=document.getElementById('calDateInput');
   if(di) di.value=dk(sel);
 }
@@ -1609,98 +1507,23 @@ function selectCalDate(key){
   render();
 }
 
-// ============ ONESIGNAL ============
-const OS_APP_ID = 'ca7dc904-bd8f-43e4-b0ec-1e2c8d3ff12d';
-const OS_API_URL = 'https://onesignal.com/api/v1/notifications';
-
-async function initOneSignal(){
-  try{
-    window.OneSignalDeferred = window.OneSignalDeferred || [];
-    OneSignalDeferred.push(async function(OneSignal){
-      await OneSignal.init({ appId: OS_APP_ID });
-    });
-  }catch(e){console.log('OneSignal init error:',e)}
+function initOneSignal(){
+  console.log('OneSignal head içinde başlatıldı');
 }
 
-// Schedule push notification via OneSignal REST API
-async function schedulePushNotif(title, message, sendAt){
-  try{
-    // We'll use Netlify Function as proxy to send notifications
-    const resp = await fetch('/.netlify/functions/notify', {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({ title, message, sendAt })
-    });
-    if(resp.ok) console.log('Push scheduled:', title);
-  }catch(e){
-    console.log('Push schedule error:', e);
-  }
-}
-
-// Schedule all today's task notifications as push
-function schedulePushNotifs(){
-  if(!S.notif) return;
-  
-  const now = new Date();
-  const today = dk(now);
-  const dayTasks = tasks[today] || [];
-  
-  dayTasks.forEach(task => {
-    if(task.done) return;
-    
-    const [h,m] = task.time.split(':').map(Number);
-    const taskDate = new Date();
-    taskDate.setHours(h, m, 0, 0);
-    
-    // Send notification X minutes before
-    const notifDate = new Date(taskDate.getTime() - S.rem * 60000);
-    
-    if(notifDate > now){
-      const sendAt = notifDate.toISOString();
-      schedulePushNotif(
-        `⏰ ${S.rem} dk sonra`,
-        `${task.title} · Saat ${task.time}`,
-        sendAt
-      );
-    }
-  });
-  
-  // Evening reminder
-  if(S.eve){
-    const [eh, em] = S.eveTime.split(':').map(Number);
-    const eveDate = new Date();
-    eveDate.setHours(eh, em, 0, 0);
-    if(eveDate > now){
-      schedulePushNotif('📋 Yarını Planla', 'Yarınki görevlerini girmek için uygulamayı aç!', eveDate.toISOString());
-    }
-  }
-}
-
-// ============ INIT ============
 function init(){
   load();
   applyTheme();
   expandTemplates();
   render();
   scheduleNotifs();
-  schedulePushNotifs();
   setInterval(()=>{render();scheduleNotifs()},60000);
-  
-  // Register Service Worker for offline support
-  if('serviceWorker' in navigator){
-    navigator.serviceWorker.register('/sw.js').then(reg=>{
-      console.log('SW registered');
-      // Check for updates every 30 minutes
-      setInterval(()=>{reg.update()},1800000);
-    }).catch(e=>console.log('SW error:',e));
-  }
-  
-  // Init OneSignal
   initOneSignal();
 }
 
 init();
 </script>
+
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
