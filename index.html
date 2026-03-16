@@ -6,9 +6,21 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="apple-mobile-web-app-title" content="PlanAI">
+<link rel="apple-touch-icon" href="icon-192.png">
 <meta name="theme-color" content="#08080e">
-<link rel="manifest" href="/manifest.json">
+<link rel="manifest" href="manifest.json">
 <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+<script>
+window.OneSignalDeferred = window.OneSignalDeferred || [];
+OneSignalDeferred.push(async function(OneSignal) {
+  await OneSignal.init({
+    appId: "ONESIGNAL_APP_ID_BURAYA",
+    notifyButton: {
+      enable: true
+    }
+  });
+});
+</script>
 <title>PlanAI - Akıllı Günlük Planlayıcı</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
@@ -1677,6 +1689,19 @@ function init(){
 }
 
 init();
+</script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js')
+      .then(reg => {
+        console.log('Service Worker kayıt edildi', reg);
+      })
+      .catch(err => {
+        console.log('Service Worker hata', err);
+      });
+  });
+}
 </script>
 </body>
 </html>
